@@ -48,6 +48,22 @@ export const validacionHeroe = () =>
             .isLength({ min: 3, max: 60 })
             .withMessage('Cada poder debe ser una cadena de texto con entre 3 y 60 caracteres'),
             
-        body('aliados').customSanitizer(value => value.split(",")).trim(),
-        body('enemigos').customSanitizer(value => value.split(",")).trim()
+        body('aliados')
+        .customSanitizer(value => {
+            // Si el valor es una cadena, la divide y limpia
+                if (typeof value === 'string') {
+                    // Divide por coma, recorta espacios y filtra cadenas vacías
+                    return value.split(',').map(p => p.trim()).filter(p => p !== '');
+                }
+                return value;
+            }),
+        body('enemigos')
+        .customSanitizer(value => {
+            // Si el valor es una cadena, la divide y limpia
+                if (typeof value === 'string') {
+                    // Divide por coma, recorta espacios y filtra cadenas vacías
+                    return value.split(',').map(p => p.trim()).filter(p => p !== '');
+                }
+                return value;
+            }),
     ];

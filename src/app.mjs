@@ -7,6 +7,14 @@ import methodOverride from 'method-override';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const loggerMiddleware = (req,res,next) =>
+{
+    console.log(`Peticion Recibida: ${req.body} ${req.url}`);
+    next();
+};
+
+app.use(loggerMiddleware);
+
 // para peticiones post en formularios
 app.use(bodyParser.urlencoded({ extended: true }));
 
